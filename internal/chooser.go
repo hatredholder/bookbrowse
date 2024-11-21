@@ -10,8 +10,6 @@ import (
 )
 
 func Chooser(hits api.Hits) api.Document {
-	// TODO: remove the grey texting appearing after making a selection
-
 	funcMap := template.FuncMap{
 		"commify": utils.Commify,
 		"green":   promptui.Styler(promptui.FGGreen),
@@ -26,10 +24,11 @@ func Chooser(hits api.Hits) api.Document {
 	}
 
 	prompt := promptui.Select{
-		Label:     "Select Book",
-		Items:     hits,
-		Templates: templates,
-		HideHelp:  true,
+		Label:        "Select Book",
+		Items:        hits,
+		Templates:    templates,
+		HideHelp:     true,
+		HideSelected: true,
 	}
 
 	// TODO: do error checking
