@@ -1,18 +1,11 @@
-package utils
+package internal
 
 import (
 	"fmt"
-	"strings"
 
-	"github.com/hatredholder/bookbrowse/api"
+	"github.com/hatredholder/bookbrowse/internal/api"
+	"github.com/hatredholder/bookbrowse/internal/utils"
 )
-
-// TODO: create a description shortener function
-// func shorten() {}
-
-func commify(slice []string) string {
-	return strings.Join(slice, ", ")
-}
 
 func Format(book api.Document) string {
 	// TODO: return markdown when -m flag is used
@@ -29,7 +22,7 @@ Genres: . . . %s
 Pages:  . . . %d
 Plot: . . . . %s
 `,
-		book.Title, book.Year, fmt.Sprintf("%.1f", book.Rating*2), commify(book.Authors), commify(book.Genres), book.Pages, book.Description)
+		book.Title, book.Year, fmt.Sprintf("%.1f", book.Rating*2), utils.Commify(book.Authors), utils.Commify(book.Genres), book.Pages, book.Description)
 
 	return fmt.Sprint(bookInfo)
 }

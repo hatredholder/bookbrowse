@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/hatredholder/bookbrowse/api"
-	"github.com/hatredholder/bookbrowse/utils"
+	"github.com/hatredholder/bookbrowse/internal"
+	"github.com/hatredholder/bookbrowse/internal/api"
 	"github.com/spf13/cobra"
 )
 
@@ -32,7 +32,7 @@ Options:
 
 		hits := api.Query(args[0])
 
-		fmt.Println(utils.Format(utils.Chooser(hits)))
+		fmt.Println(internal.Format(internal.Chooser(hits)))
 	},
 }
 
