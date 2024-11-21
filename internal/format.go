@@ -22,7 +22,7 @@ Genres: . . . %s
 Pages:  . . . %d
 Plot: . . . . %s
 `,
-		book.Title, book.Year, fmt.Sprintf("%.1f", book.Rating*2), utils.Commify(book.Authors), utils.Commify(book.Genres), book.Pages, book.Description)
+		book.Title, book.Year, fmt.Sprintf("%.1f", book.Rating*2), utils.Commify(book.Authors), utils.Commify(book.Genres), book.Pages, utils.Truncate(book.Description, 350))
 
 	return fmt.Sprint(bookInfo)
 }
