@@ -5,14 +5,54 @@ import (
 
 	"github.com/hatredholder/bookbrowse/internal/api"
 	"github.com/hatredholder/bookbrowse/internal/utils"
+	"github.com/spf13/pflag"
 )
 
-func Format(book api.Document) string {
-	// TODO: return markdown when -m flag is used
-	// TODO: return full description when -d flag is used
-	// TODO: return /10 rating -r flag is used
+func Format(book api.Document, flags *pflag.FlagSet) string {
+	isMarkdown, _ := (flags.GetBool("markdown"))
+	isFullDescription, _ := (flags.GetBool("fulldescription"))
 
-	bookInfo := fmt.Sprintf(`
+	title := book.Title
+	year := book.Year
+	rating := fmt.Sprintf("%.1f", book.Rating*2)
+	authors := utils.Commify(book.Authors)
+	genres := utils.Commify(book.Genres)
+	pages := book.Pages
+	image := book.Image.URL
+	var description string
+
+	if isFullDescription {
+		description = book.Description
+	} else {
+		description = utils.Truncate(book.Description, 350)
+	}
+
+	var bookInfo string
+
+	if isMarkdown {
+		bookInfo = fmt.Sprintf(`---
+genre: %s
+pages: %d
+rating: %s
+my_rating: 
+date_started: 
+date_finished:
+owned: false
+---
+
+![image](%s)
+
+# %s, %d
+
+%s
+
+## Authored By
+
+- %s
+`,
+			genres, pages, rating, image, title, year, description, authors)
+	} else {
+		bookInfo = fmt.Sprintf(`
 %s (%d) on hardcover.app:
 
 ⭐ %s
@@ -22,7 +62,8 @@ Genres: . . . %s
 Pages:  . . . %d
 Plot: . . . . %s
 `,
-		book.Title, book.Year, fmt.Sprintf("%.1f", book.Rating*2), utils.Commify(book.Authors), utils.Commify(book.Genres), book.Pages, utils.Truncate(book.Description, 350))
+			title, year, rating, authors, genres, pages, description)
+	}
 
 	return fmt.Sprint(bookInfo)
 }

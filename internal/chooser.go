@@ -2,6 +2,7 @@ package internal
 
 import (
 	"fmt"
+	"os"
 	"text/template"
 
 	"github.com/hatredholder/bookbrowse/internal/api"
@@ -18,8 +19,8 @@ func Chooser(hits api.Hits) api.Document {
 
 	templates := &promptui.SelectTemplates{
 		Label:    "{{ .Title }}?",
-		Active:   "{{ .Title | green }} ({{.Year}}) by {{ .Authors | commify }}",
-		Inactive: "{{ .Title }} ({{.Year}}) by {{ .Authors | commify }}",
+		Active:   "{{ .Title | green }} ({{ .Year }}) by {{ .Authors | commify }}",
+		Inactive: "{{ .Title }} ({{ .Year }}) by {{ .Authors | commify }}",
 		FuncMap:  funcMap,
 	}
 
@@ -29,11 +30,11 @@ func Chooser(hits api.Hits) api.Document {
 		Templates:    templates,
 		HideHelp:     true,
 		HideSelected: true,
+		Stdout:       os.Stderr,
 	}
 
 	// TODO: do error checking
 	i, _, err := prompt.Run()
-	// _, result, err := prompt.Run()
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
 	}
