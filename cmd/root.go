@@ -12,17 +12,27 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "bookbrowse [book name]",
 	Short: "bookbrowse allows you to browse books through hardcover.app in your terminal",
-	Long: `bookbrowse - Search books within your terminal
+	Long: `bookbrowse - search books within your terminal
 
 Example:
-  $ bookbrowse "The Old Man and the Sea" -m
+  $ bookbrowse "The Old Man and the Sea" -f
   `,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: print error message on > 1 argument
+		if len(args) == 0 {
+			cmd.Help()
+			os.Exit(0)
+		}
+
+		if os.Getenv("HARDCOVER_API_KEY") == "" {
+			fmt.Println("No API key detected, get one at https://hardcover.app/account/api")
+			os.Exit(0)
+		}
 
 		hits := api.Query(args[0])
+		book := internal.Chooser(hits)
+		result := internal.Format(book, cmd.Flags())
 
-		fmt.Println(internal.Format(internal.Chooser(hits), cmd.Flags()))
+		fmt.Print(result)
 	},
 }
 
@@ -34,6 +44,6 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().BoolP("markdown", "m", false, "Format output into markdown")
-	rootCmd.Flags().BoolP("fulldescription", "d", false, "Display full description")
+	rootCmd.Flags().BoolP("markdown", "m", false, "format output into markdown")
+	rootCmd.Flags().BoolP("fulldesc", "f", false, "display full description")
 }

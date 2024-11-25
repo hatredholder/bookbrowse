@@ -9,8 +9,8 @@ import (
 )
 
 func Format(book api.Document, flags *pflag.FlagSet) string {
-	isMarkdown, _ := (flags.GetBool("markdown"))
-	isFullDescription, _ := (flags.GetBool("fulldescription"))
+	isMarkdown, _ := flags.GetBool("markdown")
+	isFullDesc, _ := flags.GetBool("fulldesc")
 
 	title := book.Title
 	year := book.Year
@@ -19,15 +19,23 @@ func Format(book api.Document, flags *pflag.FlagSet) string {
 	genres := utils.Commify(book.Genres)
 	pages := book.Pages
 	image := book.Image.URL
-	var description string
+	description := utils.Truncate(book.Description, 350)
 
-	if isFullDescription {
+	if isFullDesc {
 		description = book.Description
-	} else {
-		description = utils.Truncate(book.Description, 350)
 	}
 
-	var bookInfo string
+	bookInfo := fmt.Sprintf(`
+%s (%d) on hardcover.app:
+
+⭐ %s
+
+Author: . . . %s
+Genres: . . . %s
+Pages:  . . . %d
+Plot: . . . . %s
+`,
+		title, year, rating, authors, genres, pages, description)
 
 	if isMarkdown {
 		bookInfo = fmt.Sprintf(`---
@@ -51,18 +59,6 @@ owned: false
 - %s
 `,
 			genres, pages, rating, image, title, year, description, authors)
-	} else {
-		bookInfo = fmt.Sprintf(`
-%s (%d) on hardcover.app:
-
-⭐ %s
-
-Author: . . . %s
-Genres: . . . %s
-Pages:  . . . %d
-Plot: . . . . %s
-`,
-			title, year, rating, authors, genres, pages, description)
 	}
 
 	return fmt.Sprint(bookInfo)

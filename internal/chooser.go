@@ -11,6 +11,11 @@ import (
 )
 
 func Chooser(hits api.Hits) api.Document {
+	if len(hits) == 0 {
+		fmt.Println("No results found")
+		os.Exit(0)
+	}
+
 	funcMap := template.FuncMap{
 		"commify": utils.Commify,
 		"green":   promptui.Styler(promptui.FGGreen),
@@ -33,10 +38,10 @@ func Chooser(hits api.Hits) api.Document {
 		Stdout:       os.Stderr,
 	}
 
-	// TODO: do error checking
 	i, _, err := prompt.Run()
 	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
+		fmt.Printf("Prompt failed: %v\n", err)
+		os.Exit(1)
 	}
 
 	return hits[i].Document
