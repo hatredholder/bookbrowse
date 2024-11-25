@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/machinebox/graphql"
 )
@@ -33,7 +34,7 @@ type QueryResponse struct {
 	}
 }
 
-func Query(title string) Hits {
+func Query(args []string) Hits {
 	// set endpoint
 	client := graphql.NewClient("https://api.hardcover.app/v1/graphql")
 
@@ -47,7 +48,7 @@ func Query(title string) Hits {
   `)
 
 	// set any variables
-	req.Var("title", title)
+	req.Var("title", strings.Join(args, " "))
 
 	// set header fields
 	req.Header.Set("content-type", "application/json")

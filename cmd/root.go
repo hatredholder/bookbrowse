@@ -29,7 +29,7 @@ Example:
 			os.Exit(0)
 		}
 
-		hits := api.Query(args[0])
+		hits := api.Query(args)
 		book := internal.Chooser(hits)
 		result := internal.Format(book, cmd.Flags())
 
