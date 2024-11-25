@@ -24,7 +24,8 @@ Example:
 		}
 
 		if os.Getenv("HARDCOVER_API_KEY") == "" {
-			fmt.Println("No API key detected, get one at https://hardcover.app/account/api")
+			fmt.Println("error: HARDCOVER_API_KEY environment variable must be set")
+			fmt.Println("get an API key at https://hardcover.app/account/api")
 			os.Exit(0)
 		}
 
