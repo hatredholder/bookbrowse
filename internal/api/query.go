@@ -40,7 +40,7 @@ func Query(title string) Hits {
 	// make a request
 	req := graphql.NewRequest(`
     query SearchQuery ($title: String!) {
-      search(query:$title, per_page: 5) {
+      search(query:$title) {
         results
       }
     }
