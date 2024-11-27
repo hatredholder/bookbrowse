@@ -1,5 +1,7 @@
 # bookbrowse
 
+Find information about your favorite book without leaving the comfort of your terminal. Powered by [hardcover.app](https://hardcover.app/)
+
 ![example](docs/example.gif)
 
 ## Installation
@@ -35,3 +37,17 @@ Set the `HARDCOVER_API_KEY` environment variable.
 - `-f`, `--fulldesc`: display full description
 - `-h`, `--help`: help for bookbrowse
 - `-m`, `--markdown`: format output into markdown
+
+### Advanced Usage
+
+bookbrowse also supports formatting the book details into Markdown.
+
+Here, for example, I wanted to have the `Fear and Loathing in Las Vegas` book's information saved neatly as a Markdown file, so I'm doing something like this:
+
+```
+bookbrowse --fulldesc --markdown Fear and Loathing in Las Vegas > "Fear and Loathing in Las Vegas".md
+```
+
+## Contributing
+
+If you encounter any problems, get any ideas on what should this project have or feel like giving me some critique, you're free to open an issue.
