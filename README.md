@@ -12,7 +12,7 @@ Clone the GitHub repository:
 git clone https://github.com/hatredholder/bookbrowse
 ```
 
-cd into the cloned repository:
+`cd` into the cloned repository:
 
 ```
 cd bookbrowse
@@ -37,6 +37,7 @@ Set the `HARDCOVER_API_KEY` environment variable.
 - `-f`, `--fulldesc`: display full description
 - `-h`, `--help`: help for bookbrowse
 - `-m`, `--markdown`: format output into markdown
+- `-v`, `--version`: display current version
 
 ### Advanced Usage
 

@@ -17,6 +17,7 @@ var rootCmd = &cobra.Command{
 Example:
   $ bookbrowse "The Old Man and the Sea" -f
   `,
+	Version: "v0.0.1",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			cmd.Help()
