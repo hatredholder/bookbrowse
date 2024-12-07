@@ -6,6 +6,15 @@ Find information about your favorite book without leaving the comfort of your te
 
 ## Installation
 
+### Use a Package Manager
+
+```bash
+# Arch Linux
+yay -S bookbrowse
+```
+
+### Build It Yourself
+
 Clone the GitHub repository:
 
 ```
