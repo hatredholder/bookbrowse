@@ -9,17 +9,35 @@ import (
 	"github.com/machinebox/graphql"
 )
 
+type Contributions []struct {
+	Author struct {
+		Name string `json:"name"`
+		Slug string `json:"slug"`
+	} `json:"author"`
+	Contribution string `json:"contribution"`
+}
+
 type Document struct {
-	Genres      []string
-	Pages       int
-	Rating      float64
-	Title       string
-	Year        int `json:"release_year"`
-	Description string
-	Authors     []string `json:"author_names"`
-	Image       struct {
+	Id                string
+	Genres            []string
+	Pages             int
+	Rating            float64
+	RatingsCount      int `json:"ratings_count"`
+	Title             string
+	Year              int    `json:"release_year"`
+	Date              string `json:"release_date"`
+	Description       string
+	AuthorNames       []string `json:"author_names"`
+	ContributionTypes []string `json:"contribution_types"`
+	Contributions     Contributions
+	Image             struct {
 		URL string `json:"url"`
 	}
+	Moods        []string
+	Tags         []string
+	Slug         string
+	HasAudiobook bool `json:"has_audiobook"`
+	HasEbook     bool `json:"has_ebook"`
 }
 
 type Hits []struct {

@@ -1,14 +1,19 @@
 package utils
 
-import "strings"
+import (
+	"log"
+	"os"
+	"path/filepath"
+)
 
-func Commify(slice []string) string {
-	return strings.Join(slice, ", ")
+func GetConfigDir() string {
+	userConfigDir, err := os.UserConfigDir()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return filepath.Join(userConfigDir, "bookbrowse")
 }
 
-func Truncate(s string, max int) string {
-	if 350 > len(s) {
-		return s
-	}
-	return s[:strings.LastIndex(s[:max], " ")] + "..."
+func GetTeplatesDir() string {
+	return filepath.Join(GetConfigDir(), "templates")
 }

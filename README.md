@@ -43,20 +43,52 @@ Set the `HARDCOVER_API_KEY` environment variable.
 
 ## Usage
 
-- `-f`, `--fulldesc`: display full description
 - `-h`, `--help`: help for bookbrowse
-- `-m`, `--markdown`: format output into markdown
+- `-t`, `--templates`: template for format output
 - `-v`, `--version`: display current version
 
 ### Advanced Usage
 
-bookbrowse also supports formatting the book details into Markdown.
-
-Here, for example, I wanted to have the `Fear and Loathing in Las Vegas` book's information saved neatly as a Markdown file, so I'm doing something like this:
+bookbrowse supports [templates](https://pkg.go.dev/text/template). On install following directories and files are created inside user config directory:
 
 ```
-bookbrowse --fulldesc --markdown Fear and Loathing in Las Vegas > "Fear and Loathing in Las Vegas".md
+bookbrowse
+└── templates
+    └── predefined 
+        ├── default.tmpl
+        └── markdown.tmpl
 ```
+
+By default `default.tmpl` template is used (duh), to use other templates `-t | --template` flag has to be passed:
+
+```sh
+bookbrowse --template markdown "Fear and Loathing in Las Vegas" | glow
+```
+
+```sh
+bookbrowse --template markdown "Fear and Loathing in Las Vegas" > "Fear and Loathing in Las Vegas".md
+```
+
+`.tmpl` extension must be ommited.
+
+User defined templates are also supported:
+
+```
+bookbrowse
+└── templates
+    ├── predefined 
+    │   └── ...
+    ├── default.tmpl # will be picked instead of "predefined/default.tmpl"
+    └── my-custom.tmpl
+```
+
+Functions:
+
+- commify: turn slice array into comma-separated list
+- truncate: truncate string, ex: `truncate {{ .long_string }} 100`
+- format_rating: n/10 stars format
+
+All functions could be found in `internal/utils/functions.go`
 
 ## Contributing
 

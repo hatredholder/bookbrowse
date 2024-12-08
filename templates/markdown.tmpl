@@ -1,0 +1,19 @@
+---
+genre: {{ .Genres }}
+pages: {{ .Pages }}
+rating: {{ .Rating }}
+my_rating: 
+date_started: 
+date_finished:
+owned: false
+---
+
+![image]({{ .Image }})
+
+# {{ .Title }}, {{ .Year }}
+
+{{ truncate .Description 350 }}
+
+## Authored By
+
+- {{ .AuthorNames }}
