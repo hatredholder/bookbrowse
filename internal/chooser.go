@@ -24,8 +24,8 @@ func Chooser(hits api.Hits) api.Document {
 
 	templates := &promptui.SelectTemplates{
 		Label:    "{{ .Title }}?",
-		Active:   "{{ .Title | green }} ({{ .Year }}) by {{ .Authors | commify }}",
-		Inactive: "{{ .Title }} ({{ .Year }}) by {{ .Authors | commify }}",
+		Active:   "{{ .Title | green }} ({{ .Year }}) by {{ .AuthorNames | commify }}",
+		Inactive: "{{ .Title }} ({{ .Year }}) by {{ .AuthorNames | commify }}",
 		FuncMap:  funcMap,
 	}
 
