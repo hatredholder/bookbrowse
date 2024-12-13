@@ -6,7 +6,7 @@ import (
 	"text/template"
 
 	"github.com/hatredholder/bookbrowse/internal/api"
-	"github.com/hatredholder/bookbrowse/internal/utils"
+	"github.com/hatredholder/bookbrowse/internal/templates"
 	"github.com/manifoldco/promptui"
 )
 
@@ -17,15 +17,15 @@ func Chooser(hits api.Hits) api.Document {
 	}
 
 	funcMap := template.FuncMap{
-		"commify": utils.Commify,
+		"commify": templates.Commify,
 		"green":   promptui.Styler(promptui.FGGreen),
 		"faint":   promptui.Styler(promptui.FGFaint),
 	}
 
 	templates := &promptui.SelectTemplates{
 		Label:    "{{ .Title }}?",
-		Active:   "{{ .Title | green }} ({{ .Year }}) by {{ .Authors | commify }}",
-		Inactive: "{{ .Title }} ({{ .Year }}) by {{ .Authors | commify }}",
+		Active:   "{{ .Title | green }} ({{ .Year }}) by {{ .AuthorNames | commify }}",
+		Inactive: "{{ .Title }} ({{ .Year }}) by {{ .AuthorNames | commify }}",
 		FuncMap:  funcMap,
 	}
 

@@ -8,7 +8,7 @@ Find information about your favorite book without leaving the comfort of your te
 
 ### Use a Package Manager
 
-```bash
+```sh
 # Arch Linux
 yay -S bookbrowse
 ```
@@ -43,20 +43,37 @@ Set the `HARDCOVER_API_KEY` environment variable.
 
 ## Usage
 
-- `-f`, `--fulldesc`: display full description
 - `-h`, `--help`: help for bookbrowse
-- `-m`, `--markdown`: format output into markdown
+- `-t`, `--templates`: choose template for output format
 - `-v`, `--version`: display current version
 
 ### Advanced Usage
 
-bookbrowse also supports formatting the book details into Markdown.
+#### Templates
 
-Here, for example, I wanted to have the `Fear and Loathing in Las Vegas` book's information saved neatly as a Markdown file, so I'm doing something like this:
+bookbrowse supports [templates](https://pkg.go.dev/text/template). When bookbrowse is ran following directories and files are created inside `~/.config` directory:
 
 ```
-bookbrowse --fulldesc --markdown Fear and Loathing in Las Vegas > "Fear and Loathing in Las Vegas".md
+bookbrowse
+├── default.tmpl
+└── markdown.tmpl
 ```
+
+`default.tmpl` template is used by default, to use other templates `--template` flag has to be passed:
+
+```sh
+bookbrowse --template markdown "Fear and Loathing in Las Vegas" > "Fear and Loathing in Las Vegas".md
+```
+
+`.tmpl` extension must be ommited when choosing a template.
+
+##### Template Functions
+
+- `commify`: turn slice array into comma-separated list
+- `truncate`: truncate string elliptically
+- `formatRating`: n/10 stars format
+
+All functions can be found in `internal/templates/tmplfuncs.go`
 
 ## Contributing
 

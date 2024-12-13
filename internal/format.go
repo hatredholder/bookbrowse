@@ -1,65 +1,64 @@
 package internal
 
 import (
+	"bytes"
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+	"text/template"
 
 	"github.com/hatredholder/bookbrowse/internal/api"
+	"github.com/hatredholder/bookbrowse/internal/templates"
 	"github.com/hatredholder/bookbrowse/internal/utils"
 	"github.com/spf13/pflag"
 )
 
+func Process(t *template.Template, vars interface{}) string {
+	var tmplBytes bytes.Buffer
+
+	err := t.Execute(&tmplBytes, vars)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return tmplBytes.String()
+}
+
+func ProcessFile(tmplPath string, funcMap template.FuncMap, vars interface{}) string {
+	tmplFile := filepath.Base(tmplPath)
+
+	tmpl, err := template.New(tmplFile).Funcs(funcMap).ParseFiles(tmplPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return Process(tmpl, vars)
+}
+
+func GetTemplateFile(templateName string) string {
+	templateFile := filepath.Join(utils.GetConfigDir(), templateName+".tmpl")
+	if _, err := os.Stat(templateFile); err != nil {
+		fmt.Println("Failed to find template with name:", templateName)
+		os.Exit(0)
+	}
+
+	return templateFile
+}
+
 func Format(book api.Document, flags *pflag.FlagSet) string {
-	isMarkdown, _ := flags.GetBool("markdown")
-	isFullDesc, _ := flags.GetBool("fulldesc")
-
-	title := book.Title
-	year := book.Year
-	rating := fmt.Sprintf("%.1f", book.Rating*2)
-	authors := utils.Commify(book.Authors)
-	genres := utils.Commify(book.Genres)
-	pages := book.Pages
-	image := book.Image.URL
-	description := utils.Truncate(book.Description, 350)
-
-	if isFullDesc {
-		description = book.Description
+	templateName, err := flags.GetString("template")
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	bookInfo := fmt.Sprintf(`
-%s (%d) on hardcover.app:
+	templateFilePath := GetTemplateFile(templateName)
 
-⭐ %s
-
-Author: . . . %s
-Genres: . . . %s
-Pages:  . . . %d
-Plot: . . . . %s
-`,
-		title, year, rating, authors, genres, pages, description)
-
-	if isMarkdown {
-		bookInfo = fmt.Sprintf(`---
-genre: %s
-pages: %d
-rating: %s
-my_rating: 
-date_started: 
-date_finished:
-owned: false
----
-
-![image](%s)
-
-# %s, %d
-
-%s
-
-## Authored By
-
-- %s
-`,
-			genres, pages, rating, image, title, year, description, authors)
+	funcMap := template.FuncMap{
+		"commify":      templates.Commify,
+		"truncate":     templates.Truncate,
+		"formatRating": templates.FormatRating,
 	}
 
-	return fmt.Sprint(bookInfo)
+	return ProcessFile(templateFilePath, funcMap, book)
 }

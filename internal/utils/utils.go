@@ -1,14 +1,15 @@
 package utils
 
-import "strings"
+import (
+	"log"
+	"os"
+	"path/filepath"
+)
 
-func Commify(slice []string) string {
-	return strings.Join(slice, ", ")
-}
-
-func Truncate(s string, max int) string {
-	if 350 > len(s) {
-		return s
+func GetConfigDir() string {
+	userConfigDir, err := os.UserConfigDir()
+	if err != nil {
+		log.Fatal(err)
 	}
-	return s[:strings.LastIndex(s[:max], " ")] + "..."
+	return filepath.Join(userConfigDir, "bookbrowse")
 }

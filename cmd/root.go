@@ -2,10 +2,13 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/hatredholder/bookbrowse/internal"
 	"github.com/hatredholder/bookbrowse/internal/api"
+	"github.com/hatredholder/bookbrowse/internal/templates"
+	"github.com/hatredholder/bookbrowse/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +18,7 @@ var rootCmd = &cobra.Command{
 	Long: `bookbrowse - search books within your terminal
 
 Example:
-  $ bookbrowse "The Old Man and the Sea" -f
+  $ bookbrowse "The Old Man and the Sea"
   `,
 	Version: "v0.0.1",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -46,6 +49,17 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().BoolP("markdown", "m", false, "format output into markdown")
-	rootCmd.Flags().BoolP("fulldesc", "f", false, "display full description")
+	// check if config dir exists
+	if _, err := os.Stat(utils.GetConfigDir()); os.IsNotExist(err) {
+		// create config dir
+		if err := os.MkdirAll(utils.GetConfigDir(), os.ModePerm); err != nil {
+			log.Fatal(err)
+		}
+		// create template files
+		if err := templates.CreateTmplFiles(); err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	rootCmd.Flags().StringP("template", "t", "default", "template for format output")
 }
