@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 
 	"github.com/hatredholder/bookbrowse/internal"
 	"github.com/hatredholder/bookbrowse/internal/api"
+	"github.com/hatredholder/bookbrowse/internal/templates"
 	"github.com/hatredholder/bookbrowse/internal/utils"
 	"github.com/spf13/cobra"
 )
@@ -33,22 +33,6 @@ Example:
 			os.Exit(0)
 		}
 
-		// Check if config exists
-		if _, err := os.Stat(utils.GetConfigDir()); os.IsNotExist(err) {
-			// Init config
-			if err := os.Mkdir(utils.GetConfigDir(), os.ModePerm); err != nil {
-				log.Fatal(err)
-			}
-			// Copy templates
-			wd, err := os.Getwd()
-			if err != nil {
-				log.Fatal(err)
-			}
-			if err := os.CopyFS(filepath.Join(utils.GetTeplatesDir(), "predefined"), os.DirFS(filepath.Join(wd, "templates"))); err != nil {
-				log.Fatal(err)
-			}
-		}
-
 		hits := api.Query(args)
 		book := internal.Chooser(hits)
 		result := internal.Format(book, cmd.Flags())
@@ -65,5 +49,17 @@ func Execute() {
 }
 
 func init() {
+	// check if config dir exists
+	if _, err := os.Stat(utils.GetConfigDir()); os.IsNotExist(err) {
+		// create config dir
+		if err := os.MkdirAll(utils.GetConfigDir(), os.ModePerm); err != nil {
+			log.Fatal(err)
+		}
+		// create template files
+		if err := templates.CreateTmplFiles(); err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	rootCmd.Flags().StringP("template", "t", "default", "template for format output")
 }
