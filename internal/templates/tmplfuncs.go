@@ -1,4 +1,4 @@
-package utils
+package templates
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ func Commify(slice []string) string {
 }
 
 func Truncate(s string, max int) string {
-	if 350 > len(s) {
+	if max > len(s) {
 		return s
 	}
 	return s[:strings.LastIndex(s[:max], " ")] + "..."

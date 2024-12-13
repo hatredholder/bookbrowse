@@ -13,7 +13,3 @@ func GetConfigDir() string {
 	}
 	return filepath.Join(userConfigDir, "bookbrowse")
 }
-
-func GetTeplatesDir() string {
-	return filepath.Join(GetConfigDir(), "templates")
-}

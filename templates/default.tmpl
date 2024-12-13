@@ -1,8 +1,0 @@
-{{ .Title }} ({{ .Year }}) on hardcover.app:
-
-⭐ {{ format_rating .Rating }}
-
-Author: . . . {{ commify .AuthorNames }}
-Genres: . . . {{ commify .Genres }}
-Pages:  . . . {{ .Pages }}
-Plot: . . . . {{ truncate .Description 350 }}
