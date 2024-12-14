@@ -28,7 +28,7 @@ Example:
 		}
 
 		if os.Getenv("HARDCOVER_API_KEY") == "" {
-			fmt.Println("error: HARDCOVER_API_KEY environment variable must be set")
+			fmt.Println("HARDCOVER_API_KEY environment variable must be set")
 			fmt.Println("get an API key at https://hardcover.app/account/api")
 			os.Exit(0)
 		}
@@ -62,4 +62,5 @@ func init() {
 	}
 
 	rootCmd.Flags().StringP("template", "t", "default", "template for format output")
+	rootCmd.Flags().Lookup("template").DefValue = ""
 }
