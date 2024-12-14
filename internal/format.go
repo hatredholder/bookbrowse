@@ -36,23 +36,24 @@ func ProcessFile(tmplPath string, funcMap template.FuncMap, vars interface{}) st
 	return Process(tmpl, vars)
 }
 
-func GetTemplateFile(templateName string) string {
-	templateFile := filepath.Join(utils.GetConfigDir(), templateName+".tmpl")
-	if _, err := os.Stat(templateFile); err != nil {
-		fmt.Println("Failed to find template with name:", templateName)
+func GetTmplFile(tmplName string) string {
+	tmplFile := filepath.Join(utils.GetConfigDir(), tmplName+".tmpl")
+	if _, err := os.Stat(tmplFile); err != nil {
+		fmt.Println("Failed to find template with name:", tmplName)
+		fmt.Println("Available templates:", utils.FindAvailableTmpls())
 		os.Exit(0)
 	}
 
-	return templateFile
+	return tmplFile
 }
 
 func Format(book api.Document, flags *pflag.FlagSet) string {
-	templateName, err := flags.GetString("template")
+	tmplName, err := flags.GetString("template")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	templateFilePath := GetTemplateFile(templateName)
+	tmplPath := GetTmplFile(tmplName)
 
 	funcMap := template.FuncMap{
 		"commify":      templates.Commify,
@@ -60,5 +61,5 @@ func Format(book api.Document, flags *pflag.FlagSet) string {
 		"formatRating": templates.FormatRating,
 	}
 
-	return ProcessFile(templateFilePath, funcMap, book)
+	return ProcessFile(tmplPath, funcMap, book)
 }
