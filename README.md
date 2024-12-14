@@ -73,7 +73,7 @@ bookbrowse --template markdown "Fear and Loathing in Las Vegas" > "Fear and Loat
 - `truncate`: truncate string elliptically
 - `formatRating`: n/10 stars format
 
-All functions can be found in `internal/templates/tmplfuncs.go`
+All functions can be found in `internal/templates/functions.go`
 
 ## Contributing
 
