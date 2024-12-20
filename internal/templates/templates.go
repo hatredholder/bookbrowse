@@ -1,18 +1,12 @@
 package templates
 
-import (
-	"os"
-
-	"github.com/hatredholder/bookbrowse/internal/utils"
-)
-
 var (
-	defaultTmpl  string
-	markdownTmpl string
+	DefaultTmpl  string
+	MarkdownTmpl string
 )
 
 func init() {
-	defaultTmpl = `{{ .Title }} ({{ .Year }}) on hardcover.app:
+	DefaultTmpl = `{{ .Title }} ({{ .Year }}) on hardcover.app:
 
 ⭐ {{ .Rating | formatRating }}
 
@@ -21,7 +15,7 @@ Genres: . . . {{ .Genres | commify }}
 Pages:  . . . {{ .Pages }}
 Plot: . . . . {{ truncate .Description 350 }}
 `
-	markdownTmpl = `---
+	MarkdownTmpl = `---
 genre: {{ .Genres | commify }}
 pages: {{ .Pages }}
 rating: {{ .Rating | formatRating }}
@@ -41,14 +35,4 @@ owned: false
 
 - {{ .AuthorNames | commify }}
 `
-}
-
-func CreateTmplFiles() error {
-	if err := os.WriteFile(utils.GetConfigDir()+"/default.tmpl", []byte(defaultTmpl), 0644); err != nil {
-		return err
-	}
-	if err := os.WriteFile(utils.GetConfigDir()+"/markdown.tmpl", []byte(markdownTmpl), 0644); err != nil {
-		return err
-	}
-	return nil
 }

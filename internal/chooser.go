@@ -5,8 +5,8 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/hatredholder/bookbrowse/internal/api"
-	"github.com/hatredholder/bookbrowse/internal/templates"
+	"github.com/hatredholder/mediabrowse/internal/api"
+	"github.com/hatredholder/mediabrowse/internal/templates"
 	"github.com/manifoldco/promptui"
 )
 
