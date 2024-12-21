@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/hatredholder/bookbrowse/internal/api"
-	"github.com/hatredholder/bookbrowse/internal/templates"
-	"github.com/hatredholder/bookbrowse/internal/utils"
+	"github.com/hatredholder/mediabrowse/internal/api"
+	"github.com/hatredholder/mediabrowse/internal/templates"
+	"github.com/hatredholder/mediabrowse/internal/utils"
 	"github.com/spf13/pflag"
 )
 
