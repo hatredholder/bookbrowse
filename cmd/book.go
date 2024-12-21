@@ -11,7 +11,12 @@ import (
 
 var bookCmd = &cobra.Command{
 	Use:   "book",
-	Short: "search books through Hardcover",
+	Short: "search books through hardcover.app",
+	Long: `search books through hardcover.app
+
+Example:
+  $ mediabrowse book "The Old Man and the Sea"
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			cmd.Help()

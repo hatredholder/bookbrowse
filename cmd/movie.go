@@ -9,7 +9,12 @@ import (
 
 var movieCmd = &cobra.Command{
 	Use:   "movie",
-	Short: "search movies through OMDb",
+	Short: "search movies through omdbapi.com",
+	Long: `search movies through omdbapi.com
+
+Example:
+  $ mediabrowse movie "Memento"
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			cmd.Help()

@@ -3,6 +3,7 @@ package templates
 var (
 	DefaultTmpl  string
 	MarkdownTmpl string
+	UsageTmpl    string
 )
 
 func init() {
@@ -34,5 +35,11 @@ owned: false
 ## Authored By
 
 - {{ .AuthorNames | commify }}
+`
+	UsageTmpl = `Usage:
+  mediabrowse [book/movie] [title] [flags]
+
+Flags:
+{{.LocalFlags.FlagUsages | trimTrailingWhitespaces}}
 `
 }

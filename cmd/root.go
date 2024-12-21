@@ -3,15 +3,16 @@ package cmd
 import (
 	"os"
 
+	"github.com/hatredholder/mediabrowse/internal/templates"
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "mediabrowse [book/movie] [title] [flags]",
 	Short: "mediabrowse allows you to browse movies & books in your terminal",
 	Long: `mediabrowse - search movies & books within your terminal
 
-Example:
+Examples:
+  $ mediabrowse movie "Memento"
   $ mediabrowse book "The Old Man and the Sea"
   `,
 	Version: "v1.0.0",
@@ -34,6 +35,9 @@ func init() {
 
 	// disable completion command
 	rootCmd.Root().CompletionOptions.DisableDefaultCmd = true
+
+	// set custom usage template
+	rootCmd.Root().SetUsageTemplate(templates.UsageTmpl)
 
 	// disable help command
 	rootCmd.SetHelpCommand(&cobra.Command{Hidden: true})
