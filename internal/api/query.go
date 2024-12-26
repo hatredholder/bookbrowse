@@ -3,7 +3,6 @@ package api
 import (
 	"context"
 	"log"
-	"os"
 	"strings"
 
 	"github.com/machinebox/graphql"
@@ -52,7 +51,7 @@ type QueryResponse struct {
 	}
 }
 
-func Query(args []string) Hits {
+func Query(args []string, apiKey string) Hits {
 	// set endpoint
 	client := graphql.NewClient("https://api.hardcover.app/v1/graphql")
 
@@ -70,7 +69,7 @@ func Query(args []string) Hits {
 
 	// set header fields
 	req.Header.Set("content-type", "application/json")
-	req.Header.Set("authorization", os.Getenv("HARDCOVER_API_KEY"))
+	req.Header.Set("authorization", apiKey)
 
 	// define a Context for the request
 	ctx := context.Background()

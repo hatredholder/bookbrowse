@@ -1,4 +1,4 @@
-# bookbrowse
+# mediabrowse
 
 Find information about your favorite book without leaving the comfort of your terminal. Powered by [hardcover.app](https://hardcover.app/)
 
@@ -10,7 +10,7 @@ Find information about your favorite book without leaving the comfort of your te
 
 ```sh
 # Arch Linux
-yay -S bookbrowse
+yay -S mediabrowse
 ```
 
 ### Build It Yourself
@@ -18,13 +18,13 @@ yay -S bookbrowse
 Clone the GitHub repository:
 
 ```
-git clone https://github.com/hatredholder/bookbrowse
+git clone https://github.com/hatredholder/mediabrowse
 ```
 
 `cd` into the cloned repository:
 
 ```
-cd bookbrowse
+cd mediabrowse
 ```
 
 Install it with `go`:
@@ -43,7 +43,7 @@ Set the `HARDCOVER_API_KEY` environment variable.
 
 ## Usage
 
-- `-h`, `--help`: help for bookbrowse
+- `-h`, `--help`: help for mediabrowse
 - `-t`, `--templates`: choose template for output format
 - `-v`, `--version`: display current version
 
@@ -51,10 +51,10 @@ Set the `HARDCOVER_API_KEY` environment variable.
 
 #### Templates
 
-bookbrowse supports [templates](https://pkg.go.dev/text/template). When bookbrowse is ran following directories and files are created inside `~/.config` directory:
+mediabrowse supports [templates](https://pkg.go.dev/text/template). When mediabrowse is ran following directories and files are created inside `~/.config` directory:
 
 ```
-bookbrowse
+mediabrowse
 ├── default.tmpl
 └── markdown.tmpl
 ```
@@ -62,7 +62,7 @@ bookbrowse
 `default.tmpl` template is used by default, to use other templates `--template` flag has to be passed:
 
 ```sh
-bookbrowse --template markdown "Fear and Loathing in Las Vegas" > "Fear and Loathing in Las Vegas".md
+mediabrowse book "Fear and Loathing in Las Vegas" --template markdown > "Fear and Loathing in Las Vegas".md
 ```
 
 `.tmpl` extension must be ommited when choosing a template.

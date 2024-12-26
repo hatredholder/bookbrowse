@@ -1,4 +1,4 @@
-module github.com/hatredholder/bookbrowse
+module github.com/hatredholder/mediabrowse
 
 go 1.23.2
 
