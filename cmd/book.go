@@ -2,10 +2,12 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/hatredholder/mediabrowse/internal"
 	"github.com/hatredholder/mediabrowse/internal/api"
+	"github.com/hatredholder/mediabrowse/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -29,9 +31,15 @@ Example:
 			os.Exit(0)
 		}
 
+		tmplName, err := cmd.Flags().GetString("template")
+		if err != nil {
+			log.Fatal(err)
+		}
+		tmplPath := utils.GetTmplPath(tmplName)
+
 		hits := api.Query(args)
 		book := internal.Chooser(hits)
-		result := internal.Format(book, cmd.Flags())
+		result := internal.Format(book, tmplPath)
 
 		fmt.Print(result)
 	},

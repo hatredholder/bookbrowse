@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -32,6 +33,16 @@ func FindAvailableTmpls() string {
 		}
 	}
 	return strings.Join(result, ", ")
+}
+
+func GetTmplPath(tmplName string) string {
+	tmplPath := filepath.Join(GetConfigDir(), tmplName+".tmpl")
+	if _, err := os.Stat(tmplPath); err != nil {
+		fmt.Println("Failed to find template with name:", tmplName)
+		os.Exit(0)
+	}
+
+	return tmplPath
 }
 
 func CreateTmplFiles() error {
