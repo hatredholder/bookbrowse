@@ -25,7 +25,8 @@ Example:
 			os.Exit(0)
 		}
 
-		if os.Getenv("HARDCOVER_API_KEY") == "" {
+		apiKey := os.Getenv("HARDCOVER_API_KEY")
+		if apiKey == "" {
 			fmt.Println("HARDCOVER_API_KEY environment variable must be set")
 			fmt.Println("get an API key at https://hardcover.app/account/api")
 			os.Exit(0)
@@ -37,7 +38,7 @@ Example:
 		}
 		tmplPath := utils.GetTmplPath(tmplName)
 
-		hits := api.Query(args)
+		hits := api.Query(args, apiKey)
 		book := internal.Chooser(hits)
 		result := internal.Format(book, tmplPath)
 
